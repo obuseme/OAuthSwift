@@ -32,10 +32,7 @@ extension String {
     }
 
     func urlEncodedStringWithEncoding(encoding: NSStringEncoding) -> String {
-        let originalString: NSString = self
-        let customAllowedSet =  NSCharacterSet(charactersInString:" :/?&=;+!@#$()',*=\"#%/<>?@\\^`{|}[]").invertedSet
-        let escapedString = originalString.stringByAddingPercentEncodingWithAllowedCharacters(customAllowedSet)
-        return escapedString! as String
+        return CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, self, nil, "!*'\"();:@&=+$,/?%#[] ", CFStringBuiltInEncodings.UTF8.rawValue) as String
     }
 
     func parametersFromQueryString() -> Dictionary<String, String> {
