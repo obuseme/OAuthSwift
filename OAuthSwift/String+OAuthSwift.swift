@@ -39,10 +39,20 @@ extension String {
         return dictionaryBySplitting("&", keyValueSeparator: "=")
     }
     
+    var urlQueryEncoded: String? {
+        return self.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+    }
+
     func dictionaryBySplitting(elementSeparator: String, keyValueSeparator: String) -> Dictionary<String, String> {
+		
+		var string = self
+		if(hasPrefix(elementSeparator)) {
+			string = String(characters.dropFirst(1))
+		}
+		
         var parameters = Dictionary<String, String>()
 
-        let scanner = NSScanner(string: self)
+        let scanner = NSScanner(string: string)
 
         var key: NSString?
         var value: NSString?
